@@ -11,21 +11,21 @@ const Navigation = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={token && userInfo ? "Home" : "Login"}>
-        {token && userInfo ? (
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ headerShown: false }}
-          />
-        )}
-      </Stack.Navigator>
+      <Stack.Navigator initialRouteName={token && userInfo ? "Main" : "Login"}>
+  {token && userInfo ? (
+    <Stack.Screen
+      name="Main"
+      component={Home}
+      options={{ headerShown: false }}
+    />
+  ) : (
+    <Stack.Screen
+      name="Login"
+      component={Login}
+      options={{ headerShown: false }}
+    />
+  )}
+</Stack.Navigator>
     </NavigationContainer>
   );
 };

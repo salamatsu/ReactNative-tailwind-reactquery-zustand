@@ -1,31 +1,44 @@
 import React from "react";
-import { Alert, StyleSheet, Text } from "react-native";
-import { Button } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useUserAuthStore } from "../../store/useUserAuthStore";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/Ionicons";
+import MainScreen from "./MainScreen"; 
+import SettingsScreen from "./SettingsScreen";
+import ScanScreen from "./ScanScreen";
+import Equipments from './Equipments'
+
+const Tab = createBottomTabNavigator();
 
 const Home = () => {
-  const { reset } = useUserAuthStore();
-
-  const handleLogout = () => {
-    Alert.alert("LOGOUT", "Press confirm to proceed.", [
-      {
-        text: "CANCEL",
-        style: "cancel",
-      },
-      { text: "CONFIRM", onPress: reset },
-    ]);
-  };
   return (
-    <SafeAreaView className=" bg-red-200 flex-1 flex justify-center items-center">
-      <Text className=" text-blue-900 text-2xl font-bold">HOME</Text>
-      <Button mode="contained" onPress={handleLogout}>
-        LOGOUT
-      </Button>
-    </SafeAreaView>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = 'home-outline';
+          } else if (route.name === 'Settings') {
+            iconName = 'settings-outline';
+          } else if (route.name === 'ScanScreen') {
+            iconName = 'scan-outline';
+          }
+          else if (route.name === 'Equipments') {
+            iconName = 'medical-outline';
+          }
+          return <Icon name={iconName} color={color} size={size} />;
+        },
+        tabBarActiveTintColor: 'blue',
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: {
+          display: 'flex',
+        },
+      })}
+    >
+      <Tab.Screen name="Home" component={MainScreen} />
+      <Tab.Screen name="ScanScreen" component={ScanScreen} />
+      <Tab.Screen name="Equipments" component={Equipments} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
   );
 };
-
 export default Home;
-
-const styles = StyleSheet.create({});
